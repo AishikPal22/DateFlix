@@ -36,14 +36,16 @@ public class AdminController : BaseApiController
     [HttpPost("edit-roles/{username}")]
     public async Task<ActionResult> EditRoles(string username, [FromQuery] string roles)
     {
-        var user = await _userManager.FindByNameAsync(username);
-        if (user == null)
-            return NotFound();
-
         if (string.IsNullOrEmpty(roles))
             return BadRequest("User must have at least one role.");
 
         var selectedRoles = roles.Split(",").ToArray();
+
+        var user = await _userManager.FindByNameAsync(username);
+        
+        if (user == null)
+            return NotFound();
+
         var userRoles = await _userManager.GetRolesAsync(user);
         
         var result = await _userManager.AddToRolesAsync(user, selectedRoles.Except(userRoles));
