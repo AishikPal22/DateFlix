@@ -9,12 +9,17 @@ import { User } from './_models/user';
 })
 export class AppComponent implements OnInit{
   title = 'Client';
+  private tokenCheckInterval: any;
 
   constructor(private accountService: AccountService) { }
  
   ngOnInit(): void {
     // this.getUsers();
     this.setCurrentUser();
+    this.accountService.checkTokenExpiration();
+    this.tokenCheckInterval = setInterval(() => {
+      this.accountService.checkTokenExpiration();
+    }, 60000);
   }
  
   setCurrentUser() {
@@ -22,5 +27,11 @@ export class AppComponent implements OnInit{
     if (!userString) return;
     const user: User = JSON.parse(userString);
     this.accountService.setCurrentUser(user);
+  }
+
+  ngOnDestroy() {
+    if (this.tokenCheckInterval) {
+      clearInterval(this.tokenCheckInterval);
+    }
   }
 }
