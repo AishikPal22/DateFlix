@@ -26,6 +26,7 @@ import { UserManagementComponent } from './admin/user-management/user-management
 import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
 import { RolesModalComponent } from './modals/roles-modal/roles-modal.component';
 import { TokenExpirationInterceptor } from './_interceptors/token-expiration.interceptor';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
  
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { TokenExpirationInterceptor } from './_interceptors/token-expiration.int
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    MatSnackBarModule,
     FormsModule,
     ReactiveFormsModule,
     SharedModule
